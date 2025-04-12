@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>WordHaven</title>
+    <title>WordHaven </title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -274,6 +274,7 @@
                 <aside class="single_sidebar_widget post_category_widget">
                   <h4 class="widget_title" style="color: #2d2d2d">Category</h4>
                   <ul class="list cat-list">
+                    {% if blog_categories %}
                     {% for category in blog_categories %}
 
                     <li>
@@ -283,15 +284,17 @@
                       </a>
                     </li>
                     {% endfor %}
+                    {% else %}
+                    <p>No Categories at the moment</p>
+                    {% endif %}
                   </ul>
                 </aside>
                 <aside class="single_sidebar_widget popular_post_widget">
                   <h3 class="widget_title" style="color: #2d2d2d">
                     Recent Post
                   </h3>
-
+                  {% if recent_posts %}
                   {% for post in recent_posts %}
-
                   <div class="media post_item">
                     <img src="{{post.image.url}}" alt="post" />
                     <div class="media-body">
@@ -302,6 +305,9 @@
                     </div>
                   </div>
                   {% endfor %}
+                  {% else %}
+                  <p>No posts at the moment</p>
+                  {% endif %}
                 </aside>
                 <aside class="single_sidebar_widget tag_cloud_widget">
                   <h4 class="widget_title" style="color: #2d2d2d">
