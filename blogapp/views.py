@@ -15,7 +15,7 @@ def blog(request):
     for blog in approved_blogs:
         blog.comment_count = blog.comment_set.filter(is_approved=True).count()
 
-    blogs_per_page = 1
+    blogs_per_page = 2
     paginator = Paginator(approved_blogs, blogs_per_page)
 
     page_number = request.GET.get('page')
