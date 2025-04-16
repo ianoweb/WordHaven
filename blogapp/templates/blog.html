@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>WordHaven </title>
+    <title>WordHaven</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -99,7 +99,7 @@
                     <div class="main-menu d-none d-lg-block">
                       <nav>
                         <ul id="navigation">
-                          <li><a href="#">Home</a></li>
+                          <li><a href="/">Home</a></li>
 <!--                          <li><a href="#">About</a></li>-->
 
                           <li class="active">
@@ -135,6 +135,14 @@
       </div>
       <!-- Header End -->
     </header>
+
+
+<!--    message when a mail is sent-->
+<!--    <center>-->
+<!--      <h2>Thanks {{message_name}}!</h2>-->
+<!--      <p>We received your email and will respond shortly...</p>-->
+<!--    </center>-->
+<!--    <br>-->
     {% block content %}
     <main>
       <!--? Hero Start -->
@@ -432,6 +440,29 @@
       </section>
       <!-- Blog Area End -->
     </main>
+<!--    contact via mail-->
+    <center>
+    <div>
+       <h2>Submit Your Blog Post</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Your Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Your Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="subject">Blog Title and Category:</label><br>
+        <input type="text" id="subject" name="subject" required><br><br>
+
+        <label for="message">Blog Content:</label><br>
+        <textarea id="message" name="message" rows="10" required></textarea><br><br>
+
+        <input type="submit" value="Send Blog to Admin">
+    </form>
+    </div>
+      </center>
+    <br><br>
     {% endblock content %}
     <footer>
       <!-- Footer Start-->
@@ -540,9 +571,11 @@
                     <script>
                       document.write(new Date().getFullYear());
                     </script>
-                    All rights reserved | This template is made with
-                    <i class="fa fa-heart" aria-hidden="true"></i> by
-                    <a href="https://colorlib.com" target="_blank">Ian Otieno: 0115421134, kagotian@gmail.com</a>
+                    All rights reserved | With love
+                    <i class="fa fa-heart" aria-hidden="true"></i> By
+<!--                    <a href="https://colorlib.com" target="_blank">-->
+                      Ian Otieno: 0115421134, kagotian@gmail.com
+<!--                    </a>-->
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                   </p>
                 </div>

@@ -6,6 +6,12 @@ from django.db import models
 from django.core.paginator import Paginator
 from django.db.models import Q
 
+# added
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
+# from .models import Blogs
+
 
 # Create your views here.
 def blog(request):
@@ -65,4 +71,86 @@ def search(request):
         blogpaginator = paginator.get_page(page_number)
 
     context = {'blogs': blogpaginator, 'blog_categories': blog_categories, 'recent_posts': recent_posts}
+    return render(request, 'blog.html', context)
+
+# added
+# def blog(request):
+#     # # blogs = Blogs.objects.all().order_by('-created_at')
+#     # blogs = Blogs.objects.filter(is_published=True).order_by('-date')
+#     # blog_categories = categories.objects.annotate(blog_count=models.Count('blogs'))
+#     # # categories = Category.objects.all()
+#     # recent_posts = Blogs.objects.filter(is_published=True).order_by('-date')[:5]
+#     # comments = Comment.objects.all()
+#     blogs = Blogs.objects.filter(is_published=True).order_by('-date')
+#     recent_posts = Blogs.objects.filter(is_published=True).order_by('-date')[:5]
+#     all_categories = categories.objects.all()
+#     comments = Comment.objects.filter(is_approved=True)
+#
+#     if request.method == 'POST':
+#         name = request.POST['name']
+#         email = request.POST['email']
+#         subject = request.POST['subject']
+#         message = request.POST['message']
+#
+#         full_message = f"From: {name}\nEmail: {email}\n\n{message}"
+#
+#         send_mail(
+#             subject=f"New Blog Submission: {subject}",
+#             message=full_message,
+#             from_email=settings.DEFAULT_FROM_EMAIL,
+#             recipient_list=[settings.ADMIN_EMAIL],
+#             fail_silently=False,
+#         )
+#
+#         messages.success(request, "Your blog has been sent to the admin!")
+#         return redirect('blog')
+#
+#     return render(request, 'blog.html', {'blogs': blogs,'categories': categories,
+#         'recent_posts': recent_posts, 'comments': comments,})
+
+
+def blog(request):
+    # Email form submission
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        full_message = f"From: {name}\nEmail: {email}\n\n{message}"
+
+        try:
+            send_mail(
+                subject=f"New Blog Submission: {subject}",
+                message=full_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.ADMIN_EMAIL],
+                fail_silently=False,
+            )
+            messages.success(request, "✅ Your blog has been sent to the admin!")
+        except Exception as e:
+            messages.error(request, f"❌ Error sending email: {str(e)}")
+
+        return redirect('blog')
+
+    # Blogs & pagination
+    blogs = Blogs.objects.filter(is_published=True).order_by('-date')
+    paginator = Paginator(blogs, 2)  # 2 blogs per page
+    page_number = request.GET.get('page')
+    paginated_blogs = paginator.get_page(page_number)
+
+    # Extra context
+    blog_categories = categories.objects.annotate(blog_count=models.Count('blogs'))
+    recent_posts = Blogs.objects.filter(is_published=True).order_by('-date')[:5]
+
+    # Comment count for each blog
+    for blog in paginated_blogs:
+        blog.comment_count = blog.comment_set.filter(is_approved=True).count()
+
+    context = {
+        'blogs': paginated_blogs,
+        'blog_categories': blog_categories,
+        'recent_posts': recent_posts,
+    }
+
     return render(request, 'blog.html', context)
