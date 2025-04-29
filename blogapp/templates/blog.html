@@ -63,14 +63,14 @@
                 <div
                   class="row d-flex justify-content-between align-items-center"
                 >
-                  <div class="header-info-left">
-                    <ul>
-                      <li><i class="fas fa-phone"></i> +254115421134</li>
-                      <li>
-                        <i class="far fa-envelope"></i>kagotian@gmail.com
-                      </li>
-                    </ul>
-                  </div>
+<!--                  <div class="header-info-left">-->
+<!--                    <ul>-->
+<!--                      <li><i class="fas fa-phone"></i> +254115421134</li>-->
+<!--                      <li>-->
+<!--                        <i class="far fa-envelope"></i>kagotian@gmail.com-->
+<!--                      </li>-->
+<!--                    </ul>-->
+<!--                  </div>-->
 <!--                  <div class="header-info-right">-->
 <!--                    <a href="#" class="btn"-->
 <!--                      >Free Quote <i class="ti-arrow-right"></i-->
@@ -86,11 +86,13 @@
                 <!-- Logo -->
                 <div class="col-xl-2 col-lg-2">
                   <div class="logo">
-                    <a href="/"
-                      ><img
-                        src="{% static 'assets/img/logo/logo.png' %}"
-                        alt=""
-                    /></a>
+                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="Logo" style="padding-right: 50px; height: 90px;" />
+
+<!--                    <a href="/"-->
+<!--                      ><img-->
+<!--                        src="{% static 'assets/img/logo/logo.png' %}"-->
+<!--                        alt=""-->
+<!--                    /></a>-->
                   </div>
                 </div>
                 <div class="col-xl-9 col-lg-8">
@@ -297,26 +299,49 @@
                     {% endif %}
                   </ul>
                 </aside>
-                <aside class="single_sidebar_widget popular_post_widget">
-                  <h3 class="widget_title" style="color: #2d2d2d">
-                    Recent Post
-                  </h3>
-                  {% if recent_posts %}
-                  {% for post in recent_posts %}
-                  <div class="media post_item">
-                    <img src="{{post.image.url}}" alt="post" />
-                    <div class="media-body">
-                      <a href="{% url 'postdetail' post.url %}">
-                        <h3 style="color: #2d2d2d">{{post.title}}</h3>
-                      </a>
-                      <p>{{post.date|date:"F j, Y"}}</p>
-                    </div>
-                  </div>
-                  {% endfor %}
-                  {% else %}
-                  <p>No posts at the moment</p>
-                  {% endif %}
-                </aside>
+
+<!--                  added here-->
+
+                  <aside class="single_sidebar_widget popular_post_widget">
+  <h3 class="widget_title" style="color: #2d2d2d">Recent Post</h3>
+  {% if recent_posts %}
+    {% for post in recent_posts %}
+      <div class="media post_item mb-3">
+        <img src="{{ post.image.url }}" alt="post" class="me-3" style="width: 90px; height: 90px; object-fit: contain;">
+        <div class="media-body">
+          <a href="{% url 'postdetail' post.url %}">
+            <h6 style="color: #2d2d2d; font-size: 16px; margin-bottom: 4px;">{{ post.title }}</h6>
+          </a>
+          <p class="text-muted mb-0" style="font-size: 13px;">{{ post.date|date:"F j, Y" }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No posts at the moment</p>
+  {% endif %}
+</aside>
+
+
+<!--                <aside class="single_sidebar_widget popular_post_widget">-->
+<!--                  <h3 class="widget_title" style="color: #2d2d2d">-->
+<!--                    Recent Post-->
+<!--                  </h3>-->
+<!--                  {% if recent_posts %}-->
+<!--                  {% for post in recent_posts %}-->
+<!--                  <div class="media post_item">-->
+<!--                    <img src="{{post.image.url}}" alt="post" />-->
+<!--                    <div class="media-body">-->
+<!--                      <a href="{% url 'postdetail' post.url %}">-->
+<!--                        <h3 style="color: #2d2d2d">{{post.title}}</h3>-->
+<!--                      </a>-->
+<!--                      <p>{{post.date|date:"F j, Y"}}</p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  {% endfor %}-->
+<!--                  {% else %}-->
+<!--                  <p>No posts at the moment</p>-->
+<!--                  {% endif %}-->
+<!--                </aside>-->
 <!--                <aside class="single_sidebar_widget tag_cloud_widget">-->
 <!--                  <h4 class="widget_title" style="color: #2d2d2d">-->
 <!--                    Tag Clouds-->

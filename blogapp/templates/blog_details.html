@@ -151,6 +151,7 @@
                            </div>
 
                            </div>
+
                         </div>
                         <div class="form-group">
                            <button type="submit" class="button button-contactForm btn_1 boxed-btn">Post Comment</button>
@@ -202,22 +203,44 @@
                     {% endfor %}
                   </ul>
                      </aside>
-                     <aside class="single_sidebar_widget popular_post_widget">
-                        <h3 class="widget_title" style="color: #2d2d2d;">Recent Post</h3>
-                        {% for post in recent_posts %}
+<!--                      added -->
 
-                  <div class="media post_item">
-                    <img src="{{post.image.url}}" alt="post" />
-                    <div class="media-body">
-                      <a href="{% url 'postdetail' post.url %}">
-                        <h3 style="color: #2d2d2d">{{post.title}}</h3>
-                      </a>
-                      <p>{{post.date|date:"F j, Y"}}</p>
-                    </div>
-                  </div>
-                  {% endfor %}
+                      <aside class="single_sidebar_widget popular_post_widget">
+  <h3 class="widget_title" style="color: #2d2d2d">Recent Post</h3>
+  {% if recent_posts %}
+    {% for post in recent_posts %}
+      <div class="media post_item mb-3">
+        <img src="{{ post.image.url }}" alt="post" class="me-3" style="width: 90px; height: 90px; object-fit: contain;">
+        <div class="media-body">
+          <a href="{% url 'postdetail' post.url %}">
+            <h6 style="color: #2d2d2d; font-size: 16px; margin-bottom: 4px;">{{ post.title }}</h6>
+          </a>
+          <p class="text-muted mb-0" style="font-size: 13px;">{{ post.date|date:"F j, Y" }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No posts at the moment</p>
+  {% endif %}
+</aside>
 
-                     </aside>
+
+<!--                     <aside class="single_sidebar_widget popular_post_widget">-->
+<!--                        <h3 class="widget_title" style="color: #2d2d2d;">Recent Post</h3>-->
+<!--                        {% for post in recent_posts %}-->
+
+<!--                  <div class="media post_item">-->
+<!--                    <img src="{{post.image.url}}" alt="post" />-->
+<!--                    <div class="media-body">-->
+<!--                      <a href="{% url 'postdetail' post.url %}">-->
+<!--                        <h3 style="color: #2d2d2d">{{post.title}}</h3>-->
+<!--                      </a>-->
+<!--                      <p>{{post.date|date:"F j, Y"}}</p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  {% endfor %}-->
+
+<!--                     </aside>-->
 <!--                     <aside class="single_sidebar_widget tag_cloud_widget">-->
 <!--                        <h4 class="widget_title" style="color: #2d2d2d;">Tag Clouds</h4>-->
 <!--                        <ul class="list">-->
